@@ -1,5 +1,5 @@
 # VALIDATED-VIV
-In this repository, a validated case of two-degree-of-freedom vortex-induced vibrations at Reynolds of 100 and reduced velocity $U^*$ of 6 is presented for OpenFOAM 2206. I tested the case and in its current condition, it should work on OF2206. The reference paper used for validation is given below. 
+In this repository, a validated case of two-degree-of-freedom vortex-induced vibrations at Reynolds number of 100 and reduced velocity $U^*$ of 6 is presented for OpenFOAM 2206. I tested the case and in its current condition, it should work on OF2206. The reference paper used for validation is given below. 
 
 I did not find acceptable results using a variable time-step, so I recommend a fixed time-step. I prefer rigidBodyMotion solver over sixDoFRigidBodyMotion solver. Also, it is important to take the effects of added mass into condieration when calcualting sprung mass. The added mass effects are not used in finding the spring stiffness using natural frequency formula. 
 
