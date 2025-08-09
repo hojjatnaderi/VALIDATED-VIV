@@ -1,0 +1,94 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2206                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      dynamicMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dynamicFvMesh       dynamicMotionSolverFvMesh;
+
+motionSolverLibs (rigidBodyMeshMotion);
+
+motionSolver    rigidBodyMotion;   
+
+report          on;
+reportToFile    on;
+
+solver
+   {
+       type Newmark;
+
+   }
+   
+   accelerationRelaxation 0.8; //0.98
+   accelerationDamping 0.9; //1.0
+   nIter   5;
+
+   updateControl   timeStep;
+   updateInterval  1;
+   rho             rhoInf;
+   rhoInf          1.0;
+
+
+bodies
+{
+     cylBody
+     {
+     	type	rigidBody;
+     	parent	root;
+     	
+     	centreOfMass    (0.0 0.0 0.0);
+     	mass            8.64;
+     	inertia (0.18 0 0 0.18 0 0.16);
+     	transform       (1 0 0 0 1 0 0 0 1) (0 0 0);// the second paranthesis show center of rotation. 
+     	
+     	joint
+     	{
+     	type 	composite;
+     	  joints
+     	  (
+     	       {
+     	        type Py;
+     	        }
+     	        {
+     	        type Px;
+     	        }
+     	   );
+        }	
+     	
+  	 patches         (cyl);
+ 	 innerDistance   5.0;// Extent of the solid-body motion region around body
+  	 outerDistance   30.0;//10.0. Extent of mesh-morphing region around body
+ 
+     }
+
+}
+
+restraints
+{
+    translationSpring1
+    {
+        type linearSpring;
+        anchor          (0.0 0.0 0.0);
+        refAttachmentPt (0.0 0.0 0.0);
+        body cylBody;
+        stiffness 8.54;
+        damping   0.0;
+        restLength      0.0;
+    }
+
+
+
+}
+
+//}
+// ************************************************************************* //

@@ -1,0 +1,9 @@
+cat logFile | grep -w 'Time =' | cut -d' ' -f3 | tr -d '(' > time
+cat logFile | grep 'of rotation' | cut -d' ' -f8 | tr -d '('  > xcenter
+cat logFile | grep 'of rotation' | cut -d' ' -f9 | tr -d '('  > ycenter
+cat logFile | grep 'of rotation' | cut -d' ' -f10 | tr -d ')'  > zcenter
+cat logFile | grep 'Linear' | cut -d' ' -f7 | tr -d '(' > vx
+cat logFile | grep 'Linear' | cut -d' ' -f8 | tr -d ' ' > vy
+cat logFile | grep 'Linear' | cut -d' ' -f9 | tr -d ')' > vz
+
+paste time xcenter ycenter zcenter vx vy vz > plotfile

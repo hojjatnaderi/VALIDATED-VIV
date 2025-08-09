@@ -1,0 +1,12 @@
+#!/bin/sh
+# This file is not going to work. It is only here to show the sequence of the commands.
+
+1- potentialFoam
+2- decomposePar
+3- mpirun -np 6 pimpleFoam -parallel > logFile
+4- ./makeFiles
+
+
+
+
+
